@@ -20,7 +20,7 @@ class Orders(commands.Cog):
     @order.command(name="add", description="Record an order (no real purchase is made)")
     async def add(self, i: discord.Interaction, product_id: int,
                   quantity: app_commands.Range[int, 1, 10000] = 1,
-                  sale_price: Optional[app_commands.Range[float, 0.01, 100000]] = None):
+                  sale_price: Optional[app_commands.Range[float, 0.01, 100000.0]] = None):
         rows = await db.fetch("SELECT * FROM products WHERE id=?", (product_id,))
         if not rows:
             return await i.response.send_message("Product not found.", ephemeral=True)
@@ -43,9 +43,9 @@ class Orders(commands.Cog):
     @app_commands.describe(actual_supplier_cost="Total paid to supplier", actual_fees="Total Amazon fees charged",
                            actual_shipping_other="Shipping + other real costs")
     async def settle(self, i: discord.Interaction, order_id: int,
-                     actual_supplier_cost: app_commands.Range[float, 0, 1e7],
-                     actual_fees: app_commands.Range[float, 0, 1e7],
-                     actual_shipping_other: app_commands.Range[float, 0, 1e7] = 0):
+                     actual_supplier_cost: app_commands.Range[float, 0.0, 1e7],
+                     actual_fees: app_commands.Range[float, 0.0, 1e7],
+                     actual_shipping_other: app_commands.Range[float, 0.0, 1e7] = 0):
         rows = await db.fetch("SELECT * FROM orders WHERE id=?", (order_id,))
         if not rows:
             return await i.response.send_message("Order not found.", ephemeral=True)
