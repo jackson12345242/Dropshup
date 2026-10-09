@@ -24,10 +24,10 @@ class Products(commands.Cog):
                            selling_price="Planned Amazon selling price", url="Product URL",
                            shipping_cost="Shipping per unit", other_expenses="Other per-unit expenses")
     async def add(self, i: discord.Interaction, name: app_commands.Range[str, 1, 200],
-                  supplier_cost: app_commands.Range[float, 0, 100000],
-                  selling_price: app_commands.Range[float, 0.01, 100000], url: str,
-                  shipping_cost: app_commands.Range[float, 0, 100000] = 0,
-                  other_expenses: app_commands.Range[float, 0, 100000] = 0):
+                  supplier_cost: app_commands.Range[float, 0.0, 100000.0],
+                  selling_price: app_commands.Range[float, 0.01, 100000.0], url: str,
+                  shipping_cost: app_commands.Range[float, 0.0, 100000.0] = 0,
+                  other_expenses: app_commands.Range[float, 0.0, 100000.0] = 0):
         if not url.startswith(("http://", "https://")) or len(url) > 500:
             return await i.response.send_message("URL must start with http:// or https://", ephemeral=True)
         pid = await db.execute(
